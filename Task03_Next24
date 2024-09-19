@@ -1,0 +1,29 @@
+from tkinter import *
+from lyricsgenius import Genius
+window = Tk()
+window.title("Lyrics Extractor")
+window.geometry("400x300")
+song_label = Label(window, text="Song Name:")
+song_entry = Entry(window)
+artist_label = Label(window, text="Artist:")
+artist_entry = Entry(window)
+lyrics_text = Text(window)
+def extract_lyrics():
+    song = song_entry.get()
+    artist = artist_entry.get()
+    genius = Genius("SXOq-yhMTSFNt1FExK573KUxed6ZdQqbdZMF_qeiG1kV0hkf_qoyLZzgxGIfJGQ7")
+    song = genius.search_song(song, artist)
+    if song is not None:
+        lyrics_text.delete(1.0, END)
+        lyrics_text.insert(END, song.lyrics)
+    else:
+        lyrics_text.delete(1.0, END)
+        lyrics_text.insert(END, "Lyrics not found.")
+extract_button = Button(window, text="Extract Lyrics", command=extract_lyrics)
+song_label.pack()
+song_entry.pack()
+artist_label.pack()
+artist_entry.pack()
+extract_button.pack()
+lyrics_text.pack()
+window.mainloop()
